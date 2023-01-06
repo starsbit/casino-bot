@@ -16,22 +16,6 @@ services:
       - botnet
     restart: unless-stopped
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    depends_on:
-      - postgres
-    ports:
-      - "5555:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
-      PGADMIN_DEFAULT_PASSWORD: admin
-    volumes:
-      - /var/lib/pgadmin
-    networks:
-      - botnet
-    restart: unless-stopped
-
   bot:
     stdin_open: true
     container_name: stars-bot
