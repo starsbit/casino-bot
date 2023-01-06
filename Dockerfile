@@ -7,7 +7,11 @@ COPY yarn.lock package.json /usr/src/bot/
 
 RUN yarn install
 
+COPY prisma /usr/src/bot/prisma/
+
 COPY . /usr/src/bot/
+
+RUN yarn prisma generate
 
 RUN yarn build
 

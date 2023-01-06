@@ -1,0 +1,50 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres:15.1
+    container_name: postgres
+    hostname: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: User
+    volumes:
+      - /var/lib/postgresql/data
+    networks:
+      - botnet
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    depends_on:
+      - postgres
+    ports:
+      - "5555:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - /var/lib/pgadmin
+    networks:
+      - botnet
+    restart: unless-stopped
+
+  bot:
+    stdin_open: true
+    container_name: stars-bot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - botnet
+    depends_on:
+      - postgres
+    entrypoint: ["/bin/sh", "-c", "yarn prisma db push && node ./dist/index.js"]
+
+networks:
+  botnet:
+    driver: bridge

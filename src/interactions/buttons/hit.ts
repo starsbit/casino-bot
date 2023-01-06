@@ -5,7 +5,11 @@ import {
   ButtonStyle,
   EmbedBuilder,
 } from "discord.js";
+import { container } from "tsyringe";
 import { ButtonInteractions } from "../../models/interactions";
+import { DatabaseService } from "../../services/database.service";
+
+const databaseService = container.resolve(DatabaseService);
 
 export const hitInteraction = (interaction: ButtonInteraction) => {
   const score = parseInt(
@@ -13,7 +17,7 @@ export const hitInteraction = (interaction: ButtonInteraction) => {
   );
   let row: ActionRowBuilder<ButtonBuilder>;
   let embed: EmbedBuilder;
-  if (Math.random() > 0.5) {
+  if (Math.random() > 0.55) {
     embed = new EmbedBuilder()
       .setTitle("Hit")
       .setDescription("Current score: " + score * 2)
@@ -55,6 +59,15 @@ export const cashoutInteraction = (interaction: ButtonInteraction) => {
   const score = parseInt(
     interaction.message.embeds[0].description!.match(/\d+/)![0]
   );
+  databaseService.getUser(interaction.user.id).then((user) => {
+    if (user === null || user === undefined) {
+      return;
+    }
+    user.balance += score;
+    databaseService.updateUser(user.id, {
+      balance: user.balance,
+    });
+  });
   const embed = new EmbedBuilder()
     .setTitle("Cash out")
     .setDescription("You cashed out with " + score + " points!")

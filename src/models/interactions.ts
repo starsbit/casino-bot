@@ -6,4 +6,6 @@ export enum ButtonInteractions {
 export enum CommandInteractions {
   decide = "decide",
   hit = "hit",
+  beg = "beg",
+  balance = "balance",
 }
