@@ -1,9 +1,11 @@
 import { ButtonInteraction, CommandInteraction, Interaction } from "discord.js";
+import { singleton } from "tsyringe";
+import { buttonInteractionHandler } from "../interactions/buttons/button-interactions";
+import { commands } from "../interactions/commands/commands";
 import { SlashCommand } from "../models/types/slash-commands";
 import { logger } from "../utils/logger";
-import { buttonInteractionHandler } from "./buttons/buttonInteractions";
-import { commands } from "./commands/commands";
 
+@singleton()
 export class InteractionExecutor {
   public execute = (interaction: Interaction) => {
     if (interaction.isCommand()) {

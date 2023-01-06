@@ -5,7 +5,7 @@ import {
   ButtonStyle,
   EmbedBuilder,
 } from "discord.js";
-import { ButtonInteractions } from "../interactions";
+import { ButtonInteractions } from "../../models/interactions";
 
 export const hitInteraction = (interaction: ButtonInteraction) => {
   const score = parseInt(

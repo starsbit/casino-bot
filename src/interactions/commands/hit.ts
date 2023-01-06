@@ -6,11 +6,21 @@ import {
   EmbedBuilder,
   SlashCommandBuilder,
 } from "discord.js";
-import { checkInteractionOnCommand } from "../../utils/commands-utils";
-import { ButtonInteractions, CommandInteractions } from "../interactions";
+import { container } from "tsyringe";
+import {
+  ButtonInteractions,
+  CommandInteractions,
+} from "../../models/interactions";
+import { CommandService } from "../../services/command.service";
 
 const hit = (interaction: CommandInteraction) => {
-  if (!checkInteractionOnCommand(interaction, CommandInteractions.hit)) {
+  const commandService = container.resolve(CommandService);
+  if (
+    !commandService.checkInteractionOnCommand(
+      interaction,
+      CommandInteractions.hit
+    )
+  ) {
     return;
   }
   const score = 100;

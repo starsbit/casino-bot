@@ -3,11 +3,18 @@ import {
   EmbedBuilder,
   SlashCommandBuilder,
 } from "discord.js";
-import { checkInteractionOnCommand } from "../../utils/commands-utils";
-import { CommandInteractions } from "../interactions";
+import { container } from "tsyringe";
+import { CommandInteractions } from "../../models/interactions";
+import { CommandService } from "../../services/command.service";
 
 const decide = async (interaction: CommandInteraction) => {
-  if (!checkInteractionOnCommand(interaction, CommandInteractions.decide)) {
+  const commandService = container.resolve(CommandService);
+  if (
+    !commandService.checkInteractionOnCommand(
+      interaction,
+      CommandInteractions.decide
+    )
+  ) {
     return;
   }
   const opt = interaction.options;

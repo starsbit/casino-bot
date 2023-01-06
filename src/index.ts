@@ -1,7 +1,5 @@
-import { client } from "./client";
-import { environment } from "./models/environment";
-import { registerCommands } from "./utils/commands-utils";
+import "reflect-metadata";
+import { ClientService } from "./services/client.service";
+import { CommandService } from "./services/command.service";
 
-client.login(environment.botToken);
-
-registerCommands(environment.applicationId!, environment.botToken!);
+new ClientService(new CommandService());

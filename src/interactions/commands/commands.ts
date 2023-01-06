@@ -1,5 +1,5 @@
 import { Collection } from "discord.js";
-import { CommandInteractions } from "../interactions";
+import { CommandInteractions } from "../../models/interactions";
 import { decideCommand } from "./decide";
 import { hitCommand } from "./hit";
 

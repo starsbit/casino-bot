@@ -1,4 +1,4 @@
-import { ButtonInteractions } from "../interactions";
+import { ButtonInteractions } from "../../models/interactions";
 import { cashoutInteraction, hitInteraction } from "./hit";
 
 export const buttonInteractionHandler = new Map();
