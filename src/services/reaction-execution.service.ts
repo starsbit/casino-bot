@@ -14,7 +14,7 @@ import { channelIds } from "../constants/channelIds";
 
 @singleton()
 export class ReactionExecutor {
-  public readonly MINIMAL_REACTION_COUNT = 1;
+  public readonly MINIMAL_REACTION_COUNT = 2;
 
   private reactionPostChannel: TextChannel | undefined = undefined;
 
