@@ -14,7 +14,7 @@ import { channelIds } from "../constants/channelIds";
 
 @singleton()
 export class ReactionExecutor {
-  public readonly MINIMAL_REACTION_COUNT = 1;
+  public readonly MINIMAL_REACTION_COUNT = 2;
 
   private reactionPostChannel: TextChannel | undefined = undefined;
 
@@ -70,9 +70,18 @@ export class ReactionExecutor {
     ) {
       return;
     }
+    for (let message of this.reactionPostChannel.messages.cache) {
+      if (message[1].embeds.length > 0) {
+        if (message[1].url === reaction.message.url) {
+          return;
+        }
+      }
+    }
     const author: EmbedAuthorOptions = {
       name: user.username ? user.username : "Unknown User",
-      iconURL: user.avatarURL() ? user.avatarURL()! : undefined,
+      iconURL: reaction.message.author!.avatarURL()
+        ? reaction.message.author!.avatarURL()!
+        : undefined,
     };
 
     const embedFooterSettings: EmbedFooterOptions = {
