@@ -60,6 +60,9 @@ export class ReactionExecutor {
       return;
     }
     const textChannel: TextChannel = reaction.message.channel;
+    if (textChannel.id === this.reactionPostChannel.id) {
+      return;
+    }
     if (
       !textChannel
         .permissionsFor(textChannel.guild.roles.everyone)
